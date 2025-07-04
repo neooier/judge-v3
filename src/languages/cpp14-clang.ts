@@ -1,5 +1,5 @@
 export const lang =  {
-    name: "cpp17-clang",
+    name: "cpp14-clang",
     sourceFileName: "a.cpp",
     fileExtension: "cpp",
     binarySizeLimit: 5000 * 1024,

@@ -1,5 +1,5 @@
 export const lang =  {
-    name: "cpp17",
+    name: "cpp14-diagnostic",
     sourceFileName: "a.cpp",
     fileExtension: "cpp",
     binarySizeLimit: 5000 * 1024,
@@ -10,7 +10,7 @@ export const lang =  {
         // write a shell script or some other stuff, 
         // and put it to your sandbox.
         executable: "/usr/bin/g++-8",
-        parameters: ["g++-8", sourcePath, "-o", `${outputDirectory}/a.out`, "-std=c++14", "-fsanitize=undefined,address", "-fdiagnostics-color=always", "-DONLINE_JUDGE", !doNotUseX32Abi && "-mx32"].filter(x => x),
+        parameters: ["g++-8", sourcePath, "-o", `${outputDirectory}/a.out`, "-std=c++14", "-fsanitize=undefined,float-cast-overflow,float-divide-by-zero", "-fdiagnostics-color=always", "-DONLINE_JUDGE", !doNotUseX32Abi && "-mx32"].filter(x => x),
         time: 5000,
         memory: 1024 * 1024 * 1024 * 2,
         process: 10,
