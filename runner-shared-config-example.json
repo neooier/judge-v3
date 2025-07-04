@@ -18,5 +18,5 @@
     "SandboxUser": "nobody",
     "SandboxRoot": "/opt/syzoj/sandbox/rootfs",
     "BinaryDirectory": "/opt/syzoj/sandbox/bin",
-    "DoNotUseX32ABI": false
+    "DoNotUseX32ABI": true
 }
