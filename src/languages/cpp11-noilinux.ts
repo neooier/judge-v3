@@ -9,8 +9,8 @@ export const lang = {
         // To customize the compilation process,
         // write a shell script or some other stuff, 
         // and put it to your sandbox.
-	executable: "/usr/bin/compile-cpp-noilinux",
-	parameters: ["compile-cpp-noilinux", "-std=c++11", sourcePath, "-o", `${outputDirectory}/a.out`, "-O2", "-DONLINE_JUDGE"],
+        executable: "/usr/bin/compile-cpp-noilinux",
+        parameters: ["compile-cpp-noilinux", "-std=c++11", sourcePath, "-o", `${outputDirectory}/a.out`, "-O2", "-DONLINE_JUDGE"],
         time: 5000,
         memory: 1024 * 1024 * 1024 * 2,
         process: 10,
