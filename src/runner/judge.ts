@@ -198,6 +198,7 @@ export async function judgeStandard(task: StandardRunTask)
             status = TestcaseResultType.RuntimeError;
         } else {
             message = `Exited with return code ${runResult.result.code}`;
+            if (runResult.result.code) status = TestcaseResultType.RuntimeError;
         }
 
         const [userOutput, userError] = await Promise.all([
@@ -334,6 +335,7 @@ export async function judgeInteraction(task: InteractionRunTask)
             status = TestcaseResultType.RuntimeError;
         } else {
             message = `Exited with return code ${runResult.result.code}`;
+            if (runResult.result.code) status = TestcaseResultType.RuntimeError;
         }
         if (interactorResult.result.status !== SandboxStatus.OK) {
             if (interactorResult.result.status === SandboxStatus.TimeLimitExceeded) {
