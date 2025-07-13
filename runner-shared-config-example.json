@@ -4,7 +4,7 @@
     "RedisUrl": "redis://127.0.0.1:6379",
     "Priority": 1,
     "DebugMessageDisplayLimit": 5000,
-    "OutputLimit": 104857600,
+    "OutputLimit": 314572800,
     "StderrDisplayLimit": 5120,
     "DataDisplayLimit": 128,
     "CompilerMessageLimit": 50000,
