@@ -62,6 +62,9 @@
     "uuid": "^3.1.0",
     "winston": "^2.3.1"
   },
+  "overrides": {
+    "simple-sandbox": "https://github.com/neooier/simple-sandbox"
+  },
   "scripts": {
     "build": "tsc -d -p .",
     "build:watch": "tsc -w -d -p ."

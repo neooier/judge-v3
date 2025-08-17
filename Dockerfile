@@ -1,9 +1,14 @@
 FROM node:10-buster
 
+# Change to archive.debian.org for Debian Buster (EOL) - must be first!
+RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian-security/ buster/updates main" >> /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+
 # Download and extract Sandbox RootFS (as the first-step!)
 COPY sandbox-rootfs-url.txt /
 RUN apt-get update && \
-    apt-get install -y wget && \
+    apt-get install -y wget ca-certificates && \
     wget -O /sandbox-rootfs.tar.xz "$(cat /sandbox-rootfs-url.txt)" && \
     tar xf /sandbox-rootfs.tar.xz -C /
 
