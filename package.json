@@ -1,7 +1,7 @@
 {
   "name": "judge-daemon",
   "version": "0.0.1",
-  "description": "Judge daemon for SYZOJ.",
+  "description": "Judge daemon for SDFZOJ.",
   "main": "",
   "author": "t123yh",
   "license": "GPL-3.0",
