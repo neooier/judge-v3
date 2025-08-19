@@ -6,7 +6,7 @@ RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y python3 build-essential libboost-all-dev cmake
+    apt-get install -y python3 build-essential libboost-all-dev libfmt-dev cmake 
 
 WORKDIR /app
 
