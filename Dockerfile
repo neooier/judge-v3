@@ -14,13 +14,13 @@ RUN apt-get update && \
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential libboost-all-dev
+    apt-get install -y build-essential libboost-all-dev libfmt-dev cmake clang++-9 
 
 WORKDIR /app
 
 # Install NPM dependencies
 COPY package.json yarn.lock ./
-RUN yarn 
+RUN CXX=clang++-9 yarn 
 
 # Copy code and build
 COPY . .
