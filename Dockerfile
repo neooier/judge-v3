@@ -1,4 +1,4 @@
-FROM node:16.20.2-buster
+FROM node:10-buster
 
 # # Change to archive.debian.org for Debian Buster (EOL) - must be first!
 RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list && \
@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential libboost-all-dev libfmt-dev cmake
+    apt-get install -y build-essential libboost-all-dev
 
 WORKDIR /app
 
