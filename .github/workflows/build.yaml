@@ -8,17 +8,7 @@ on:
 jobs:
     build_master:
         if: github.ref == 'refs/heads/master'
-        strategy:
-            fail-fast: false
-            matrix:
-                target:
-                    - name: with rootfs
-                      image-name: jorylee/sdfzoj-judge
-                      dockerfile: Dockerfile
-                    - name: without rootfs
-                      image-name: jorylee/sdfzoj-judge-norootfs
-                      dockerfile: Dockerfile.NOROOTFS
-        name: Build and Push (${{ matrix.target.name }})
+        name: Build and Push
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -40,25 +30,18 @@ jobs:
 
                   echo "EOF" >> $GITHUB_ENV
               env:
-                  IMAGE_NAME: ${{ matrix.target.image-name }}
+                  IMAGE_NAME: jorylee/sdfzoj-judge
             - name: Build and Push
               uses: docker/build-push-action@v2
               with:
                   platforms: linux/amd64
                   push: true
                   tags: ${{ env.TAGS }}
-                  file: ${{ matrix.target.dockerfile }}
+                  file: Dockerfile
 
     build_non_master:
         if: github.ref != 'refs/heads/master'
-        strategy:
-            fail-fast: false
-            matrix:
-                target:
-                    - name: without rootfs
-                      image-name: jorylee/sdfzoj-judge-norootfs
-                      dockerfile: Dockerfile.NOROOTFS
-        name: Build (no push) (${{ matrix.target.name }})
+        name: Build (no push)
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -74,11 +57,11 @@ jobs:
 
                   echo "EOF" >> $GITHUB_ENV
               env:
-                  IMAGE_NAME: ${{ matrix.target.image-name }}
+                  IMAGE_NAME: jorylee/sdfzoj-judge
             - name: Build
               uses: docker/build-push-action@v2
               with:
                   platforms: linux/amd64
                   push: false
                   tags: ${{ env.TAGS }}
-                  file: ${{ matrix.target.dockerfile }}
+                  file: Dockerfile
