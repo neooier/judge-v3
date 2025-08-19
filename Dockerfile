@@ -1,4 +1,4 @@
-FROM node:14-buster
+FROM node:16.20.2-buster
 
 # # Change to archive.debian.org for Debian Buster (EOL) - must be first!
 # RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list && \
