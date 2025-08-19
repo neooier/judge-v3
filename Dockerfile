@@ -20,7 +20,7 @@ WORKDIR /app
 
 # Install NPM dependencies
 COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile
+RUN yarn 
 
 # Copy code and build
 COPY . .
