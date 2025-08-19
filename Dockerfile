@@ -1,4 +1,4 @@
-FROM node:20-bullseye
+FROM node:18.20-bullseye
 
 # # Change to archive.debian.org for Debian Buster (EOL) - must be first!
 # RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list && \
@@ -14,13 +14,13 @@ RUN apt-get update && \
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential libboost-all-dev libfmt-dev cmake clang++-9 
+    apt-get install -y build-essential libboost-all-dev libfmt-dev cmake
 
 WORKDIR /app
 
 # Install NPM dependencies
 COPY package.json yarn.lock ./
-RUN CXX=clang++-9 yarn 
+RUN  yarn 
 
 # Copy code and build
 COPY . .
