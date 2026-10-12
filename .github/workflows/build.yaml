@@ -38,6 +38,7 @@ jobs:
                   HASH_SHORT="$(git rev-parse --short HEAD)"
                   echo $IMAGE_NAME:$HASH_SHORT >> $GITHUB_ENV
                   echo $IMAGE_NAME:latest >> $GITHUB_ENV
+                  echo $IMAGE_NAME:cgroup-v2 >> $GITHUB_ENV
 
                   echo "EOF" >> $GITHUB_ENV
               env:
