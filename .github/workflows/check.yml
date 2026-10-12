@@ -1,4 +1,4 @@
-name: Check judge
+name: Docker NOI Linux 2.0 acceptance
 on: [push, pull_request]
 permissions:
   contents: read
@@ -7,14 +7,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 10
-      - run: sudo apt-get update && sudo apt-get install -y python3 build-essential libfmt-dev
-      - run: npm install -g yarn@1.22.22
-      - run: yarn install --frozen-lockfile --non-interactive
-        env:
-          PYTHON: /usr/bin/python3
-      - run: yarn build
-      - name: Load pinned native sandbox
-        run: node -e "require('simple-sandbox')"
+      - uses: docker/setup-buildx-action@v3
+      - name: Build pinned judge and NOI rootfs
+        run: docker buildx build --load --platform linux/amd64 -t judge-noi:ci .
+      - name: Verify toolchain without additional capabilities
+        run: docker run --rm judge-noi:ci verify-toolchain
+      - name: Compile, run and test cgroup v2 in Docker
+        run: |
+          docker run --rm --cgroupns=private --cap-add=SYS_ADMIN --cap-add=SYS_RESOURCE \
+            --security-opt seccomp=unconfined --security-opt apparmor=unconfined \
+            judge-noi:ci verify-sandbox

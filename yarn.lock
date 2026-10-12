@@ -1751,9 +1751,9 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-"simple-sandbox@git+https://github.com/neooier/simple-sandbox.git#40d45200ccefdaa24d9de54a790f6151b0f7f958":
+"simple-sandbox@git+https://github.com/neooier/simple-sandbox.git#11813da7ab238b9fbba7caca030ba6d5da21f52c":
   version "0.3.5"
-  resolved "git+https://github.com/neooier/simple-sandbox.git#40d45200ccefdaa24d9de54a790f6151b0f7f958"
+  resolved "git+https://github.com/neooier/simple-sandbox.git#11813da7ab238b9fbba7caca030ba6d5da21f52c"
   dependencies:
     bindings "^1.5.0"
     nan "2.19.0"

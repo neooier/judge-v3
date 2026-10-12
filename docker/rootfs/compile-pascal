@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+source_file=$1
+output_directory=$2
+exec /usr/bin/fpc -O2 -FE"$output_directory" -FU"$output_directory" -o"$output_directory/a" "$source_file"

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+source_file=$1
+output_directory=$2
+cp -- "$source_file" "$output_directory/a.py"
+case "$3" in
+  'python3 -m py_compile a.py') exec /usr/bin/python3 -m py_compile "$output_directory/a.py" ;;
+  'python2 -m py_compile a.py') exec /usr/bin/python2 -m py_compile "$output_directory/a.py" ;;
+  *) echo 'Unsupported NOI Linux script compiler' >&2; exit 2 ;;
+esac

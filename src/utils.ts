@@ -2,6 +2,7 @@ import * as fse from 'fs-extra';
 import util = require('util');
 import sha256 = require('crypto-js/sha256');
 import nodeStream = require('stream');
+import { binaryToolchainId } from './toolchain';
 
 import { exec, execFile } from "child_process";
 
@@ -35,7 +36,8 @@ export async function getFolderSize(dirName: string): Promise<number> {
 }
 
 export function codeFingerprint(code: string, language: string): string {
-    return "src-" + language + sha256(code);
+    const namespace = binaryToolchainId === 'legacy' ? '' : binaryToolchainId + '-';
+    return "src-" + namespace + language + sha256(code);
 }
 
 export function streamToBuffer(source: nodeStream.Readable): Promise<Buffer> {

@@ -1,33 +1,42 @@
-FROM node:10-buster
-
-RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list && \
-    echo "deb http://archive.debian.org/debian-security/ buster/updates main" >> /etc/apt/sources.list && \
-    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
-
-# Install OS dependencies
-RUN apt-get update && \
-    apt-get install -y python3 build-essential libfmt-dev
-
+# Requires BuildKit (Docker 23+ for named local contexts).
+# Compatibility entry point; the preferred equivalent is Dockerfile --target judge-no-rootfs.
+ARG SANDBOX_SOURCE=remote
+FROM node:10.24.1-buster@sha256:05e259ab6478ae6032163ce34683bfccb495c8219f2f01a8d30889bb3ce33084 AS runtime-base
+RUN printf '%s\n' 'deb http://archive.debian.org/debian/ buster main' \
+      'deb http://archive.debian.org/debian-security/ buster/updates main' > /etc/apt/sources.list && \
+    printf '%s\n' 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until && \
+    apt-get update && apt-get install -y --no-install-recommends \
+      python3 build-essential libfmt-dev git ca-certificates util-linux && \
+    rm -rf /var/lib/apt/lists/*
+ENV PYTHON=/usr/bin/python3 NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt \
+    npm_config_nodedir=/usr/local
+FROM runtime-base AS sandbox-remote
+FROM runtime-base AS sandbox-local
+COPY --from=sandbox-source / /sandbox-repo/
+ENV GIT_CONFIG_PARAMETERS="'url.file:///sandbox-repo.insteadOf=https://github.com/neooier/simple-sandbox.git'" \
+    GIT_ALLOW_PROTOCOL=file:https
+FROM sandbox-${SANDBOX_SOURCE} AS builder
 WORKDIR /app
-
-# Install NPM dependencies
 COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile
-
-# Copy code and build
+RUN yarn install --frozen-lockfile --non-interactive
 COPY . .
-RUN yarn build
-
+RUN yarn build && node -e "require('simple-sandbox')"
+FROM runtime-base
+WORKDIR /app
+COPY --from=builder /app/ /app/
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker/verify-noi-toolchain.sh /usr/local/bin/verify-noi-toolchain
+RUN sed -i 's/\r$//' /docker-entrypoint.sh /usr/local/bin/verify-noi-toolchain && \
+    chmod 755 /docker-entrypoint.sh /usr/local/bin/verify-noi-toolchain
 ENV NODE_ENV=production \
     SYZOJ_JUDGE_RUNNER_INSTANCE=runner \
     SYZOJ_JUDGE_SANDBOX_ROOTFS_PATH=/rootfs \
     SYZOJ_JUDGE_WORKING_DIRECTORY=/tmp/working \
     SYZOJ_JUDGE_BINARY_DIRECTORY=/tmp/binary \
     SYZOJ_JUDGE_TESTDATA_PATH=/app/testdata \
-    SYZOJ_JUDGE_DO_NOT_USE_X32_ABI=true
-
+    SYZOJ_JUDGE_DO_NOT_USE_X32_ABI=true \
+    SYZOJ_JUDGE_LANGUAGE_PROFILE=noi-linux2 \
+    SYZOJ_JUDGE_CGROUP_ROOT=/sys/fs/cgroup
 VOLUME ["/app/config", "/app/testdata", "/rootfs"]
-
-COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["daemon"]

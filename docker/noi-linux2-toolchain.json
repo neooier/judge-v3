@@ -1,0 +1,12 @@
+{
+  "profile": "noi-linux2",
+  "ubuntu": "20.04",
+  "gcc": "9.3.0",
+  "g++": "9.3.0",
+  "fpc": "3.0.4",
+  "python2": "2.7",
+  "python3": "3.8",
+  "architecture": "x86_64",
+  "contestCppFlags": ["-std=c++14", "-O2", "-static"],
+  "reference": "https://www.noi.cn/gynoi/jsgz/2021-07-16/732450.shtml"
+}

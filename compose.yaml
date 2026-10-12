@@ -1,0 +1,28 @@
+services:
+  daemon:
+    image: ${JUDGE_IMAGE:-12oj-judge:noilinux2}
+    platform: linux/amd64
+    command: daemon
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config:ro
+      - ./testdata:/app/testdata
+  runner:
+    image: ${JUDGE_IMAGE:-12oj-judge:noilinux2}
+    platform: linux/amd64
+    command: runner
+    cgroup: private
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RESOURCE
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config:ro
+      - ./testdata:/app/testdata
+    environment:
+      SYZOJ_JUDGE_RUNNER_INSTANCE: runner
+      SYZOJ_JUDGE_CGROUP_ROOT: /sys/fs/cgroup
+      SYZOJ_JUDGE_LANGUAGE_PROFILE: noi-linux2

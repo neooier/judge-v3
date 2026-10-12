@@ -28,6 +28,9 @@ export interface Language {
     ) => ExecParam;
 }
 
+import { configureNoiLinux2 } from './noiLinux2';
+import { languageProfile as profile } from '../toolchain';
+
 export const languages: Language[] = [
     require('./cpp'),
     require('./cpp11'),
@@ -58,7 +61,7 @@ export const languages: Language[] = [
     require('./ocaml'),
     require('./vbnet')
     */
-].map(f => f.lang);
+].map(f => f.lang).map(language => profile === 'noi-linux2' ? configureNoiLinux2(language) : language).filter(language => language != null);
 
 export function getLanguage(name: string): Language {
     return name == null ? null : languages.find(l => l.name === name);

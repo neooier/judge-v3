@@ -11,11 +11,13 @@ import { get as getRedis, put as putRedis } from './redis';
 import { globalConfig as Cfg } from './config';
 import { getLanguage, Language } from '../languages';
 import { redisBinarySuffix, redisMetadataSuffix } from '../interfaces';
+import { binaryToolchainId } from '../toolchain';
 Bluebird.promisifyAll(lockfile);
 
 interface BinaryMetadata {
     language: string;
     code: string;
+    toolchain?: string;
 }
 
 export async function pushBinary(name: string, language: Language, code: string, path: string): Promise<void> {
@@ -27,7 +29,8 @@ export async function pushBinary(name: string, language: Language, code: string,
     }, ['.']));
     const data: BinaryMetadata = {
         language: language.name,
-        code: code
+        code: code,
+        toolchain: binaryToolchainId
     };
     await putRedis(name + redisBinarySuffix, binary);
     await putRedis(name + redisMetadataSuffix, msgpack.encode(data));
@@ -41,6 +44,9 @@ export async function fetchBinary(name: string): Promise<[string, Language, stri
     const lockFileName = pathLib.join(Cfg.binaryDirectory, `${name}-get.lock`);
 
     const metadata = msgpack.decode(await getRedis(name + redisMetadataSuffix)) as BinaryMetadata;
+    if ((metadata.toolchain || 'legacy') !== binaryToolchainId) {
+        throw new Error('Cached binary uses a different compiler profile; deploy daemon and runner with the same image and language profile.');
+    }
     const isCurrentlyWorking = await fse.pathExists(lockFileName);
     // The binary already exists, no need for locking
     if (await fse.pathExists(targetName) && !isCurrentlyWorking) {
