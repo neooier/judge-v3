@@ -7,9 +7,11 @@ import rmq = require('./rmq');
 import { RPCRequest, RPCTaskType } from '../interfaces';
 import { compile } from './compile';
 import { judgeStandard, judgeAnswerSubmission, judgeInteraction } from './judge';
+import { initializeSandbox } from 'simple-sandbox';
 
 (async function () {
     winston.info("Runner starts.");
+    initializeSandbox(Cfg.sandbox);
     await rmq.connect();
     winston.info("Start consuming the queue.");
     await rmq.waitForTask(async (task) => {

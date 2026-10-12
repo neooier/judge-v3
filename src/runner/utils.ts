@@ -3,7 +3,7 @@ import posix = require('posix');
 import fse = require('fs-extra');
 import { ExecParam } from '../languages';
 import {cloneObject} from '../utils';
-import { SandboxParameter, MountInfo } from 'simple-sandbox/src/interfaces';
+import { SandboxParameter, MountInfo } from 'simple-sandbox/lib/interfaces';
 import { globalConfig as Cfg } from './config';
 
 export * from "../utils";

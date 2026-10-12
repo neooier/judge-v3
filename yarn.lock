@@ -373,9 +373,9 @@ better-assert@~1.0.0:
   dependencies:
     callsite "1.0.0"
 
-bindings@^1.2.1:
+bindings@^1.5.0:
   version "1.5.0"
-  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
+  resolved "https://registry.npmjs.org/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
   integrity sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==
   dependencies:
     file-uri-to-path "1.0.0"
@@ -1412,7 +1412,12 @@ msgpack-lite@^0.1.26:
     int64-buffer "^0.1.9"
     isarray "^1.0.0"
 
-nan@^2.0.5, nan@^2.4.x, nan@^2.6.2:
+nan@2.19.0:
+  version "2.19.0"
+  resolved "https://registry.npmjs.org/nan/-/nan-2.19.0.tgz#bb58122ad55a6c5bc973303908d5b16cfdd5a8c0"
+  integrity sha512-nO1xXxfh/RWNxfd/XPfbIfFk5vgLsAxUR9y5O0cHMJu/AW9U95JLXqthYHjEp+8gQ5p96K9jUp8nbVOxCdRbtw==
+
+nan@^2.0.5, nan@^2.4.x:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
   integrity sha512-TghvYc72wlMGMVMluVo9WRJc0mB8KxxF/gZ4YYFy7V2ZQX9l7rgbPg7vjS9mt6U5HXODVFVI2bOduCzwOMv/lw==
@@ -1746,13 +1751,12 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-simple-sandbox@^0.3.5:
+"simple-sandbox@git+https://github.com/neooier/simple-sandbox.git#40d45200ccefdaa24d9de54a790f6151b0f7f958":
   version "0.3.5"
-  resolved "https://registry.yarnpkg.com/simple-sandbox/-/simple-sandbox-0.3.5.tgz#7d61845a190145887de59c969de27f64a74ef9a7"
-  integrity sha512-uLJc+xoF/o7zKeya9f6n0B6gY+h6N0QgbfIEBw/y90gDd0+rqavH9OZnqMPwWvMKKKQsRG+SLEL8/iJ3uU7p4Q==
+  resolved "git+https://github.com/neooier/simple-sandbox.git#40d45200ccefdaa24d9de54a790f6151b0f7f958"
   dependencies:
-    bindings "^1.2.1"
-    nan "^2.6.2"
+    bindings "^1.5.0"
+    nan "2.19.0"
     randomstring "^1.1.5"
 
 simple-swizzle@^0.2.2:

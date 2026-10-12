@@ -14,6 +14,7 @@ export interface SandboxConfigBase {
     redirectBeforeChroot: boolean;
     user: string;
     cgroup: string;
+    cgroupRoot: string;
     environments: string[];
 }
 
@@ -74,6 +75,7 @@ export const globalConfig: ConfigStructure = {
         redirectBeforeChroot: false,
         user: sharedConfig.SandboxUser,
         cgroup: instanceConfig.SandboxCgroup,
+        cgroupRoot: instanceConfig.SandboxCgroupRoot,
         environments: sharedConfig.SandboxEnvironments
     },
 }
@@ -92,6 +94,7 @@ const configEnvOverrideItems = {
     SYZOJ_JUDGE_BINARY_DIRECTORY: [String, "binaryDirectory"],
     SYZOJ_JUDGE_DO_NOT_USE_X32_ABI: [parseBoolean, "doNotUseX32Abi"],
     SYZOJ_JUDGE_CGROUP: [String, "sandbox.cgroup"],
+    SYZOJ_JUDGE_CGROUP_ROOT: [String, "sandbox.cgroupRoot"],
 };
 
 for (const key in configEnvOverrideItems) {

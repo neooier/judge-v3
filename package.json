@@ -52,7 +52,7 @@
     "redlock": "^3.0.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "simple-sandbox": "^0.3.5",
+    "simple-sandbox": "git+https://github.com/neooier/simple-sandbox.git#40d45200ccefdaa24d9de54a790f6151b0f7f958",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.2.0",
     "source-map-support": "^0.4.16",
@@ -61,9 +61,6 @@
     "typescript": "^2.5.1",
     "uuid": "^3.1.0",
     "winston": "^2.3.1"
-  },
-  "overrides": {
-    "simple-sandbox": "https://github.com/neooier/simple-sandbox"
   },
   "scripts": {
     "build": "tsc -d -p .",

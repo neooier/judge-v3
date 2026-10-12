@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential libboost-all-dev
+    apt-get install -y python3 build-essential libfmt-dev
 
 WORKDIR /app
 
